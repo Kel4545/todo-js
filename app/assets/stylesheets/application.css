@@ -13,3 +13,30 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+    font-family: "Comic Sans MS";
+}
+
+h1 {
+    text-align: center
+}
+
+form {
+  width: 130px;
+    margin: 0 auto
+}
+
+button {
+ display: block;
+ margin: 0 auto;
+}
+
+h2 {
+  text-align: center
+}
+
+li {
+  text-align: center;
+  list-style: none;
+}
