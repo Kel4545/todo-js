@@ -34,11 +34,12 @@ $(document).ready(function () {
       url: "/todos",
       data: { todo: { name: checkListItem }}
     })
-    $('h2').append("<li class='checkListItem'>" + checkListItem + "<p id='close'> X </p></li>");
+
+    $('h2').append("<li class='checkListItem'>" + checkListItem + "<p id='close'> X </p>", "<p id='check'>&#10003</p>");
 
     $.get("/todos", function (data, status) {
       todos = data;
-    });
+    })
 
     $('p').css({"display": "inline"});
     $('#checkListItem').val("")
@@ -52,20 +53,35 @@ $(document).ready(function () {
     $('#flash').remove();
   });
 
+  body.one('click', '#check', function () {
+    $('h2').before("<div id='Completed'>Completed</div>");
+  });
 
-  body.on('click', '#close', function (){
-    $('#deleteflash').remove();
+  body.on('click', '#close', function () {
+    $('.checkListItem').remove();
+  });
+
+  body.on('click', '#close', function () {
     $('h2').before("<div id='deleteflash'>Todo deleted<p id='closeDelete'>X</p></div>");
+
     $.ajax({
       type: "DELETE",
       url: '/todos'
-    });
-    $('#deleteFlash').fadeOut(5000, function () {
-      $(this).remove();
     })
+
+    $('#deleteflash').fadeOut(5000, function () {
+      $(this).remove();
+    });
 
     body.on('click', '#closeDelete', function () {
       $('#deleteflash').remove();
+    });
+
+    body.on('click', '#Complete', function () {
+      $('h2').before("<div id='completeflash'>Todo Completed<p id='closeflash'>X</p></div>");
+      $('#completeflash').fadeOut(5000, function () {
+        $(this).remove();
+      });
     });
   });
 });
