@@ -18,18 +18,21 @@ html {
     font-family: "Comic Sans MS";
 }
 
+
+
 h1 {
     text-align: center
 }
 
 form {
   width: 130px;
-    margin: 0 auto
+  margin: 0 auto
 }
 
 button {
  display: block;
  margin: 0 auto;
+
 }
 
 h2 {
@@ -40,3 +43,46 @@ li {
   text-align: center;
   list-style: none;
 }
+
+#flash {
+    background: #008000;
+    font-size: 10px;
+    color: #FFFFFF;
+    width: 30%;
+    text-align: center;
+    height: 20px;
+    margin-top: 30px;
+    margin-left: 415px;
+}
+
+#deleteflash {
+    background: #ff0000;
+    font-size: 10px;
+    color: #FFFFFF;
+    width: 20%;
+    margin: auto;
+}
+
+p {
+    color: black
+}
+
+#close {
+    margin-left: 350px;
+    color: red;
+}
+
+#closed  {
+   color: black;
+   display: inline;
+   margin-right: -31%;
+   margin-left: 24%;
+}
+#closeDelete {
+    color: black;
+    display: inline;
+    margin-right: -31%;
+    margin-left: 24%;
+}
+
+

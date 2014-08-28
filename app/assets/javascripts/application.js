@@ -14,25 +14,66 @@
 //= require jquery_ujs
 //= require_tree .
 
-
-
-$(document).ready(function() {
-  $('body').append("<h1>Todoly</h1>");
-  $("body").append("<form><form name=checkListItem><input type=text id=checkListItem></form>");
+$(document).ready(function () {
+  var body = $('body');
+  body.append("<h1>Todoly</h1>");
+  body.append("<form><form name=checkListItem><input type=text id=checkListItem></form>");
   $("form").append("<button>Create ToDo</button>");
-  $("button").one("click", function() {
-    $("body").append("<h2>ToDo!</h2>")
+
+
+  $("button").one("click", function () {
+    body.append("<h2>ToDo!</h2>");
   });
 
   $('button').click(function (e) {
     e.preventDefault();
-     var checkListItem = $("#checkListItem").val();
-     $('body').append("<li>" + checkListItem + "</li>")
-     $('')
-    setTimeout(hideFlashes, 2000);
+    var checkListItem = $("#checkListItem").val();
+
+    $.ajax({
+      type: "POST",
+      url: "/todos",
+      data: { todo: { name: checkListItem }}
+    })
+    $('h2').append("<li class='checkListItem'>" + checkListItem + "<p id='close'> X </p></li>");
+
+    $.get("/todos", function (data, status) {
+      todos = data;
+    });
+
+    $('p').css({"display": "inline"});
+    $('#checkListItem').val("")
+    $('h2').before("<div id='flash'>Todo Created<p id='closed'>X</p></div>");
+    $('#flash').fadeOut(5000, function () {
+      $(this).remove();
+    })
+  });
+
+  body.on('click', '#closed', function () {
+    $('#flash').remove();
+  });
+
+
+  body.on('click', '#close', function (){
+    $('#deleteflash').remove();
+    $('h2').before("<div id='deleteflash'>Todo deleted<p id='closeDelete'>X</p></div>");
+    $.ajax({
+      type: "DELETE",
+      url: '/todos'
+    });
+    $('#deleteFlash').fadeOut(5000, function () {
+      $(this).remove();
+    })
+
+    body.on('click', '#closeDelete', function () {
+      $('#deleteflash').remove();
+    });
   });
 });
 
+
+// $(body).on('click', '#closeDelete', function() {
+//   $('#deleteFlash').remove();
+// });
 
 
 // var html = "";
@@ -50,10 +91,10 @@ $(document).ready(function() {
 //  alert("Clicked");    // creates a pop up that says clicked
 // });
 
- //  $("form").on("submit", function (e) {
- //    e.preventDefault();
- //    var todo =
- //  }
+//  $("form").on("submit", function (e) {
+//    e.preventDefault();
+//    var todo =
+//  }
 
 
 

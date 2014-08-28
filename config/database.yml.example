@@ -5,8 +5,8 @@ default: &default
 
 development:
   <<: *default
-  database: todos_development
+  database: todos.js
 
 test:
   <<: *default
-  database: todos_test
+  database: todos.js
