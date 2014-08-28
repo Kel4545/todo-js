@@ -12,8 +12,9 @@ class TodosController < ApplicationController
     render json: todo
   end
 
-  def delete
-    Todo.destroy(params["id"])
+  def destroy
+   todo = Todo.destroy(params["id"])
+   todo.destroy
   end
 end
 

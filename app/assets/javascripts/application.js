@@ -21,9 +21,12 @@ $(document).ready(function () {
   $("form").append("<button>Create ToDo</button>");
 
 
+
   $("button").one("click", function () {
     body.append("<h2>ToDo!</h2>");
-  });
+  $('h2').before("<div id='Completed'>Completed</div>");
+    });
+
 
   $('button').click(function (e) {
     e.preventDefault();
@@ -36,9 +39,11 @@ $(document).ready(function () {
     })
 
     $('h2').append("<li class='checkListItem'>" + checkListItem + "<p id='close'> X </p>", "<p id='check'>&#10003</p>");
+    $("check").css({"display": "inline"})
 
-    $.get("/todos", function (data, status) {
-      todos = data;
+    $.ajax({
+      url: '/todos',
+      type: "GET"
     })
 
     $('p').css({"display": "inline"});
@@ -53,34 +58,34 @@ $(document).ready(function () {
     $('#flash').remove();
   });
 
-  body.one('click', '#check', function () {
-    $('h2').before("<div id='Completed'>Completed</div>");
-  });
 
   body.on('click', '#close', function () {
-    $('.checkListItem').remove();
-  });
 
-  body.on('click', '#close', function () {
-    $('h2').before("<div id='deleteflash'>Todo deleted<p id='closeDelete'>X</p></div>");
+    body.on('click', '#close', function () {
+      $('.checkListItem').remove();
+      $('h2').before("<div id='deleteflash'>Todo deleted<p id='closeDelete'>X</p></div>");
 
-    $.ajax({
-      type: "DELETE",
-      url: '/todos'
-    })
 
-    $('#deleteflash').fadeOut(5000, function () {
-      $(this).remove();
-    });
+      $.ajax({
+        type: "DELETE",
+        url: '/todos/:id'
+      })
 
-    body.on('click', '#closeDelete', function () {
-      $('#deleteflash').remove();
-    });
-
-    body.on('click', '#Complete', function () {
-      $('h2').before("<div id='completeflash'>Todo Completed<p id='closeflash'>X</p></div>");
-      $('#completeflash').fadeOut(5000, function () {
+      $('#deleteflash').fadeOut(5000, function () {
         $(this).remove();
+      });
+
+      body.on('click', '#closeDelete', function () {
+        $('#deleteflash').remove();
+      });
+
+
+
+      body.on('click', '#check', function () {
+        $('h2').before("<div id='completeflash'>Todo Completed<p id='closeflash'>X</p></div>");
+        $('#completeflash').fadeOut(5000, function () {
+          $(this).remove();
+        });
       });
     });
   });

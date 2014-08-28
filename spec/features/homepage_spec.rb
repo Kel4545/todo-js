@@ -6,12 +6,14 @@ describe "Todos" do
 
     expect(page).to have_content "Todoly"
 
-    fill_in "todo", with: "feed kittens"
-    click_button "Create Todo"
+    fill_in "checkListItem", with: "feed kittens"
+    click_button "Create ToDo"
+    expect(page).to have_content "feed kittens"
+    expect(page).to have_content "ToDo!"
 
-    within "#todos-list" do
-       expect(page).to have_content "feed kittens"
-    end
+    # within "#checkListItem" do
+    #   expect(page).to have_content "feed kittens"
+    #  end
   end
 end
 
