@@ -21,11 +21,19 @@ $(document).ready(function () {
   $("form").append("<button>Create ToDo</button>");
 
 
+  var anything = $.getJSON('/todos', function (data) {
+    var items = []
+    $.each(data, function (key, todo) {
+      items.push("<li class = checkListItem id=" + todo.id + ">" + todo.name + "</li>");
+    });
+    body.append(items.join(""))
+  });
+
 
   $("button").one("click", function () {
     body.append("<h2>ToDo!</h2>");
-  $('h2').before("<div id='Completed'>Completed</div>");
-    });
+    $('h2').before("<div id='Completed'>Completed</div>");
+  });
 
 
   $('button').click(function (e) {
@@ -38,13 +46,9 @@ $(document).ready(function () {
       data: { todo: { name: checkListItem }}
     })
 
-    $('h2').append("<li class='checkListItem'>" + checkListItem + "<p id='close'> X </p>", "<p id='check'>&#10003</p>");
+    $('h2').prepend("<li class='checkListItem'>" + checkListItem + "<p id='close'> X </p>", "<p id='check'>&#10003</p>");
     $("check").css({"display": "inline"})
 
-    $.ajax({
-      url: '/todos',
-      type: "GET"
-    })
 
     $('p').css({"display": "inline"});
     $('#checkListItem').val("")
@@ -68,7 +72,7 @@ $(document).ready(function () {
 
       $.ajax({
         type: "DELETE",
-        url: '/todos/:id'
+        url: '/todos'
       })
 
       $('#deleteflash').fadeOut(5000, function () {
@@ -78,7 +82,6 @@ $(document).ready(function () {
       body.on('click', '#closeDelete', function () {
         $('#deleteflash').remove();
       });
-
 
 
       body.on('click', '#check', function () {
